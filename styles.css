@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#tree-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.node {
+    border: 1px solid black;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.node.red {
+    background-color: red;
+    color: white;
+}
+
+.node.black {
+    background-color: black;
+    color: white;
+}
+
+.edge {
+    width: 2px;
+    height: 50px;
+    background-color: black;
+    margin: 0 auto;
+}
