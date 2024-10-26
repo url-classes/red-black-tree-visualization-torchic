@@ -3,13 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de Árbol Rojo-Negro</title>
-    <link rel="stylesheet" href="./styles.css">
+    <title>Árbol Rojo-Negro</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Librería D3.js -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            margin-left: 5px;
+            font-size: 1rem;
+        }
+        .tree-container {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Visualizador de Árbol Rojo-Negro</h1>
-    <div id="tree-container"></div>
-    
-    <script src="./ArbolRojoNegro/index.ts"></script>
+    <div class="container">
+        <h1>Árbol Rojo-Negro</h1>
+        
+        <!-- Sección para insertar número -->
+        <div class="input-group">
+            <input type="number" id="insertNumber" placeholder="Número a insertar">
+            <button onclick="insertar()">Insertar</button>
+        </div>
+        
+        <!-- Sección para eliminar número -->
+        <div class="input-group">
+            <input type="number" id="deleteNumber" placeholder="Número a eliminar">
+            <button onclick="eliminar()">Eliminar</button>
+        </div>
+        
+        <!-- Botones para recorridos -->
+        <div class="input-group">
+            <button onclick="inorder()">Inorder</button>
+            <button onclick="posorder()">Posorder</button>
+            <button onclick="preorder()">Preorder</button>
+        </div>
+    </div>
+
+    <!-- Contenedor para el árbol -->
+    <div id="tree" class="tree-container"></div>
+
+    <script>
+        // Nodo básico de un árbol Rojo-Negro (solo como ejemplo de estructura)
+        class Nodo {
+            constructor(valor, color) {
+                this.valor = valor;
+                this.color = color; // rojo o negro
+                this.izquierdo = null;
+                this.derecho = null;
+            }
+        }
+
+        // Estructura básica para el árbol (falta implementar toda la lógica de inserción/eliminación)
+        let arbol = null;
+
+        function insertar() {
+            let numero = parseInt(document.getElementById("insertNumber").value);
+            if (!isNaN(numero)) {
+                // Lógica para insertar el nodo en el árbol rojo-negro (aquí solo lo añadimos para demostración)
+                arbol = new Nodo(numero, "negro"); // Solo un ejemplo básico
+                actualizarArbol();
+            }
+        }
+
+        function eliminar() {
+            let numero = parseInt(document.getElementById("deleteNumber").value);
+            if (!isNaN(numero)) {
+                // Lógica para eliminar el nodo en el árbol rojo-negro
+                alert("Eliminar número: " + numero);
+                actualizarArbol();
+            }
+        }
+
+        function inorder() { alert("Recorrido Inorder"); }
+        function posorder() { alert("Recorrido Posorder"); }
+        function preorder() { alert("Recorrido Preorder"); }
+
+        // Función para actualizar visualmente el árbol
+        function actualizarArbol() {
+            // Limpia el árbol anterior
+            d3.select("#tree").selectAll("*").remove();
+
+            // Configuración del SVG
+            const svg = d3.select("#tree")
+                .append("svg")
+                .attr("width", 600)
+                .attr("height", 400);
+
+            // Si hay un nodo en el árbol, dibuja uno básico en el centro
+            if (arbol) {
+                svg.append("circle")
+                    .attr("cx", 300)
+                    .attr("cy", 100)
+                    .attr("r", 20)
+                    .attr("fill", arbol.color === "negro" ? "black" : "red");
+
+                svg.append("text")
+                    .attr("x", 300)
+                    .attr("y", 105)
+                    .attr("fill", "white")
+                    .attr("text-anchor", "middle")
+                    .text(arbol.valor);
+            }
+        }
+    </script>
 </body>
 </html>
