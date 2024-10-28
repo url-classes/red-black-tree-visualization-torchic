@@ -18,6 +18,13 @@
         <div class="input-group">
             <input type="number" id="deleteNumber" placeholder="Número a eliminar">
             <button id="deleteButton">Eliminar</button>
+            <div id="resultadoEliminar"></div> 
+        </div>
+        
+        <div class="input-group">
+            <input type="number" id="searchNumber" placeholder="Número a buscar">
+            <button id="searchButton">Buscar</button>
+            <div id="resultadoBuscar"></div> 
         </div>
         
         <div class="input-group">
@@ -34,10 +41,15 @@
 
     <script src="./ArbolRojoNegro/rbt.js" type="module" defer></script>
     <script>
-        document.getElementById('insertButton').onclick = () => {
-            insertarDesdeHTML();
-        };
+        // Asignación de eventos para cada botón
+        document.getElementById('insertButton').onclick = () => insertarDesdeHTML();
+        document.getElementById('deleteButton').onclick = () => eliminarDesdeHTML();
+        document.getElementById('searchButton').onclick = () => buscarDesdeHTML();
 
+        // Funciones para actualización del árbol en el canvas
+        function actualizarCanvas() {
+            // Aquí puedes llamar la función que redibuje el árbol en el canvas
+        }
     </script>
 </body>
 </html>

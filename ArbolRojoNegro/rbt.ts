@@ -19,6 +19,14 @@ class NodeRBT {
         return this.data;
     }
 
+    public setColor(color: string): void {
+        if (color === "red" || color === "black") {
+            this.color = color;
+        } else {
+            console.error("Invalid color. Color must be 'red' or 'black'.");
+        }
+    }
+
     public setFather(newFather: NodeRBT): void {
         this.father = newFather;
     }
@@ -419,9 +427,127 @@ class RBTree {
 
         return nodeData;
     }
+
+    public buscarDesdeHTML(): void {
+        const inputElement = document.getElementById("searchNumber") as HTMLInputElement;
+        const data = Number(inputElement.value);
+        console.log(`Trying to search: ${data}`);
+
+        if (!isNaN(data)) {
+            const result = this.buscar(data); // Llamamos al método buscar
+            const resultadoDiv = document.getElementById("resultadoBuscar") as HTMLElement;
+            if (result.node) {
+                resultadoDiv.innerHTML = `Nodo encontrado: ${result.node.getData()}<br>Color: ${result.color}<br>Recorrido: ${result.recorrido.join(' -> ')}`;
+                console.log(`Found: ${result.node.getData()} with color: ${result.color}`);
+            } else {
+                resultadoDiv.innerHTML = 'Nodo no encontrado';
+                console.log('Node not found');
+            }
+        } else {
+            console.error("Invalid input: Not a number");
+        }
+    }
+
+    public deleteDesdeHTML(): void {
+        const inputElement = document.getElementById("deleteNumber") as HTMLInputElement;
+        const data = Number(inputElement.value);
+        console.log(`Trying to delete: ${data}`);
+
+        if (!isNaN(data)) {
+            const message = this.eliminar(data); // Llamamos al método delete
+            const resultadoDiv = document.getElementById("resultadoEliminar") as HTMLElement;
+            resultadoDiv.innerText = message;
+            console.log(message);
+            this.mostrarArbol(); // Actualizar el árbol en el canvas
+        } else {
+            console.error("Invalid input: Not a number");
+        }
+    }
+
+    public buscar(data: number): { node: NodeRBT | null; color: string; recorrido: number[] } {
+        const recorrido: number[] = [];
+        let current: NodeRBT | null = this.root;
+
+        while (current !== this.leaf) {
+            recorrido.push(current.getData()); // Guardamos el recorrido
+
+            if (data === current.getData()) {
+                return { node: current, color: current.getColor(), recorrido }; // Retornamos el nodo, su color y el recorrido
+            } else if (data < current.getData()) {
+                current = current.getLeftChild();
+            } else {
+                current = current.getRightChild();
+            }
+        }
+
+        return { node: null, color: "", recorrido }; // Si no se encuentra el nodo
+    }
+
+    public eliminar(data: number): string {
+        const nodeToDelete = this.buscar(data); // Buscar el nodo que contiene el dato
+        if (nodeToDelete.node === null) {
+            return "El nodo no existe en el árbol"; // Mensaje si no se encuentra el nodo
+        }
+    
+        // Llamamos al método deleteNode pasando el nodo encontrado
+        this.deleteNode(nodeToDelete.node); // Cambia el nombre si tu método de eliminación es diferente
+        return `Nodo con valor ${data} eliminado`; // Mensaje de éxito
+    }    
+
+    private deleteNode(node: NodeRBT): void {
+        let z = this.root;
+        let x: NodeRBT, y: NodeRBT;
+    
+        // Buscar el nodo que contiene el dato
+        while (z !== this.leaf && z.getData() !== node.getData()) {
+            if (node.getData() < z.getData()) {
+                z = z.getLeftChild();
+            } else {
+                z = z.getRightChild();
+            }
+        }
+    
+        if (z === this.leaf) {
+            console.log("Node not found in the tree");
+            return;
+        }
+    
+        y = z;
+        let yOriginalColor = y.getColor();
+        
+        if (z.getLeftChild() === this.leaf) {
+            x = z.getRightChild();
+            this.transplant(z, z.getRightChild());
+        } else if (z.getRightChild() === this.leaf) {
+            x = z.getLeftChild();
+            this.transplant(z, z.getLeftChild());
+        } else {
+            y = this.minimum(z.getRightChild());
+            yOriginalColor = y.getColor();
+            x = y.getRightChild();
+    
+            if (y.getFather() === z) { // Aquí se usa getFather en lugar de setFather
+                x.setFather(y);
+            } else {
+                this.transplant(y, y.getRightChild());
+                y.setRightChild(z.getRightChild());
+                y.getRightChild().setFather(y);
+            }
+            this.transplant(z, y);
+            y.setLeftChild(z.getLeftChild());
+            y.getLeftChild().setFather(y);
+            y.setColor(z.getColor());
+        }
+        
+        if (yOriginalColor === "black") {
+            this.fixDelete(x);
+        }
+    }    
 }
 
 // Instancia del árbol
 const arbolRojoNegro = new RBTree();
 // Asignación a window
 (window as any).insertarDesdeHTML = () => arbolRojoNegro.insertarDesdeHTML();
+(window as any).eliminarDesdeHTML = () => arbolRojoNegro.deleteDesdeHTML();
+(window as any).buscarDesdeHTML = () => arbolRojoNegro.buscarDesdeHTML();
