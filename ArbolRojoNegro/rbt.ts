@@ -158,6 +158,23 @@ class RBTree {
         this.printNode(this.root);
     }
 
+    private returnSearchNode(node: NodeRBT, num: number): NodeRBT{
+
+        if (node.getData() < num){
+            this.returnSearchNode(node.getRightChild(), num)
+        }
+
+        if (node.getData() > num){
+            this.returnSearchNode(node.getLeftChild(), num)
+        }
+        
+        return node
+    }
+
+    public searchNode(num: number): NodeRBT{
+        return  this.returnSearchNode(this.root, num);
+    }
+
     public insert(data: number): void {
         // Inserción normal de BST
         let newNode: NodeRBT = new NodeRBT(data);
