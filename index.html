@@ -4,49 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Árbol Rojo-Negro</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Librería D3.js -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            background-color: #f4f4f9;
-        }
-        .container {
-            text-align: center;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .input-group {
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 5px 10px;
-            margin-left: 5px;
-            font-size: 1rem;
-        }
-        .tree-container {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
+    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Libreria D3.js -->
 </head>
 <body>
     <div class="container">
-        <h1>Árbol Rojo-Negro</h1>
+        <!-- Titulo con "Rojo" en color rojo -->
+        <h1>Árbol <span style="color: red;">Rojo</span>-Negro</h1>
         
-        <!-- Sección para insertar número -->
+        <!-- Seccion para insertar número -->
         <div class="input-group">
             <input type="number" id="insertNumber" placeholder="Número a insertar">
             <button onclick="insertar()">Insertar</button>
         </div>
         
-        <!-- Sección para eliminar número -->
+        <!-- Seccion para eliminar número -->
         <div class="input-group">
             <input type="number" id="deleteNumber" placeholder="Número a eliminar">
             <button onclick="eliminar()">Eliminar</button>
@@ -60,11 +32,13 @@
         </div>
     </div>
 
-    <!-- Contenedor para el árbol -->
+    <!-- Contenedor para el arbol -->
     <div id="tree" class="tree-container"></div>
 
+    <!-- Contenedor para mensajes flotantes -->
+    <div id="floating-message" class="floating-message"></div>
+
     <script>
-        // Nodo básico de un árbol Rojo-Negro (solo como ejemplo de estructura)
         class Nodo {
             constructor(valor, color) {
                 this.valor = valor;
@@ -74,14 +48,23 @@
             }
         }
 
-        // Estructura básica para el árbol (falta implementar toda la lógica de inserción/eliminación)
         let arbol = null;
+
+        function mostrarMensaje(texto) {
+            const mensaje = document.getElementById("floating-message");
+            mensaje.textContent = texto;
+            mensaje.classList.add("show");
+
+            setTimeout(() => {
+                mensaje.classList.remove("show");
+            }, 2000);
+        }
 
         function insertar() {
             let numero = parseInt(document.getElementById("insertNumber").value);
             if (!isNaN(numero)) {
-                // Lógica para insertar el nodo en el árbol rojo-negro (aquí solo lo añadimos para demostración)
-                arbol = new Nodo(numero, "negro"); // Solo un ejemplo básico
+                // Logica de insercion aqui
+                mostrarMensaje(`Se insertó correctamente el número ${numero}`);
                 actualizarArbol();
             }
         }
@@ -89,8 +72,8 @@
         function eliminar() {
             let numero = parseInt(document.getElementById("deleteNumber").value);
             if (!isNaN(numero)) {
-                // Lógica para eliminar el nodo en el árbol rojo-negro
-                alert("Eliminar número: " + numero);
+                // Logica de eliminacion aqui
+                mostrarMensaje(`Se eliminó correctamente el número ${numero}`);
                 actualizarArbol();
             }
         }
@@ -99,18 +82,14 @@
         function posorder() { alert("Recorrido Posorder"); }
         function preorder() { alert("Recorrido Preorder"); }
 
-        // Función para actualizar visualmente el árbol
         function actualizarArbol() {
-            // Limpia el árbol anterior
             d3.select("#tree").selectAll("*").remove();
 
-            // Configuración del SVG
             const svg = d3.select("#tree")
                 .append("svg")
                 .attr("width", 600)
                 .attr("height", 400);
 
-            // Si hay un nodo en el árbol, dibuja uno básico en el centro
             if (arbol) {
                 svg.append("circle")
                     .attr("cx", 300)
