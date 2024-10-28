@@ -28,103 +28,11 @@
     </div>
 
     <!-- Canvas para dibujar el árbol -->
-    <div class="canvas-container">
-        <canvas id="treeCanvas" width="800" height="400" style="border:1px solid black;"></canvas>
-    </div>
+    <canvas id="treeCanvas" width="800" height="400" style="border:1px solid black;"></canvas>
 
     <div id="floating-message" class="floating-message"></div>
 
     <script src="./ArbolRojoNegro/rbt.js" type="module" defer></script>
-    <script>
-        import { tree } from './ArbolRojoNegro/rbt.js';
-
-        // Función para insertar el número desde el HTML
-        document.getElementById('insertButton').onclick = () => {
-            const number = parseInt(document.getElementById('insertNumber').value);
-            if (!isNaN(number)) {
-                tree.insert(number);
-                dibujarArbol();  // Llama a la función para redibujar el árbol
-            }
-        };
-
-        // Función para eliminar el número desde el HTML
-        document.getElementById('deleteButton').onclick = () => {
-            const number = parseInt(document.getElementById('deleteNumber').value);
-            if (!isNaN(number)) {
-                tree.delete(number);
-                dibujarArbol();
-            }
-        };
-
-        // Funciones para mostrar los recorridos
-        document.getElementById('inorderButton').onclick = () => {
-            mostrarMensaje(tree.inorderTraversal().join(", "));
-        };
-
-        document.getElementById('posorderButton').onclick = () => {
-            mostrarMensaje(tree.postorderTraversal().join(", "));
-        };
-
-        document.getElementById('preorderButton').onclick = () => {
-            mostrarMensaje(tree.preorderTraversal().join(", "));
-        };
-
-        // Función para mostrar el mensaje flotante
-        function mostrarMensaje(mensaje) {
-            const mensajeDiv = document.getElementById('floating-message');
-            mensajeDiv.textContent = mensaje;
-            mensajeDiv.classList.add('show');
-            setTimeout(() => {
-                mensajeDiv.classList.remove('show');
-            }, 3000);
-        }
-
-        // Función de dibujo para el árbol
-        function dibujarArbol() {
-            const canvas = document.getElementById('treeCanvas');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Función recursiva para dibujar cada nodo
-            function dibujarNodo(node, x, y, offset) {
-                if (!node) return;
-
-                // Dibuja el nodo (círculo)
-                ctx.beginPath();
-                ctx.arc(x, y, 20, 0, 2 * Math.PI);
-                ctx.fillStyle = node.color;
-                ctx.fill();
-                ctx.strokeStyle = 'black';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                // Dibuja el valor dentro del nodo (centrado y en blanco)
-                ctx.fillStyle = 'white';
-                ctx.font = 'bold 16px Arial';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(node.value, x, y);
-
-                // Llama a la función para los nodos hijos
-                if (node.left) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, y);
-                    ctx.lineTo(x - offset, y + 50);
-                    ctx.stroke();
-                    dibujarNodo(node.left, x - offset, y + 50, offset / 2);
-                }
-                if (node.right) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, y);
-                    ctx.lineTo(x + offset, y + 50);
-                    ctx.stroke();
-                    dibujarNodo(node.right, x + offset, y + 50, offset / 2);
-                }
-            }
-
-            // Iniciar dibujo desde la raíz del árbol
-            dibujarNodo(tree.root, canvas.width / 2, 30, 100);
-        }
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
