@@ -25,20 +25,20 @@
             <button id="posorderButton">Posorder</button>
             <button id="preorderButton">Preorder</button>
         </div>
+
+        <!-- Canvas para dibujar el árbol -->
+        <div class="canvas-container">
+            <canvas id="treeCanvas" width="1000" height="400" style="border:1px solid black;"></canvas>
+        </div>
+
+        <div id="floating-message" class="floating-message"></div>
     </div>
-
-    <!-- Canvas para dibujar el árbol -->
-    <canvas id="treeCanvas" width="800" height="400" style="border:1px solid black;"></canvas>
-
-    <div id="floating-message" class="floating-message"></div>
 
     <script src="./ArbolRojoNegro/rbt.js" type="module" defer></script>
     <script>
         document.getElementById('insertButton').onclick = () => {
             insertarDesdeHTML();
         };
-
     </script>
-
 </body>
 </html>

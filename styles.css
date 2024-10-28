@@ -1,10 +1,3 @@
-/* Centrar el canvas */
-.canvas-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
 body {
     font-family: Arial, sans-serif;
 }
@@ -14,10 +7,20 @@ body {
     margin: 20px auto;
 }
 
+/* Grupo de entrada */
 .input-group {
     margin: 10px 0;
 }
 
+/* Centrar el canvas */
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Asegura que se centre verticalmente */
+    margin-top: 30px;
+}
+
+/* Mensaje flotante */
 .floating-message {
     position: fixed;
     top: -50px;
