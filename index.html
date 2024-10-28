@@ -5,106 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Árbol Rojo-Negro</title>
     <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
-    <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Libreria D3.js -->
 </head>
 <body>
     <div class="container">
-        <!-- Titulo con "Rojo" en color rojo -->
         <h1>Árbol <span style="color: red;">Rojo</span>-Negro</h1>
         
-        <!-- Seccion para insertar número -->
         <div class="input-group">
             <input type="number" id="insertNumber" placeholder="Número a insertar">
-            <button onclick="insertar()">Insertar</button>
+            <button id="insertButton">Insertar</button>
         </div>
         
-        <!-- Seccion para eliminar número -->
         <div class="input-group">
             <input type="number" id="deleteNumber" placeholder="Número a eliminar">
-            <button onclick="eliminar()">Eliminar</button>
+            <button id="deleteButton">Eliminar</button>
         </div>
         
-        <!-- Botones para recorridos -->
         <div class="input-group">
-            <button onclick="inorder()">Inorder</button>
-            <button onclick="posorder()">Posorder</button>
-            <button onclick="preorder()">Preorder</button>
+            <button id="inorderButton">Inorder</button>
+            <button id="posorderButton">Posorder</button>
+            <button id="preorderButton">Preorder</button>
         </div>
     </div>
 
-    <!-- Contenedor para el arbol -->
-    <div id="tree" class="tree-container"></div>
+    <!-- Canvas para dibujar el árbol -->
+    <canvas id="treeCanvas" width="800" height="400" style="border:1px solid black;"></canvas>
 
-    <!-- Contenedor para mensajes flotantes -->
     <div id="floating-message" class="floating-message"></div>
 
+    <script src="./ArbolRojoNegro/rbt.js" type="module" defer></script>
     <script>
-        class Nodo {
-            constructor(valor, color) {
-                this.valor = valor;
-                this.color = color; // rojo o negro
-                this.izquierdo = null;
-                this.derecho = null;
-            }
-        }
+        document.getElementById('insertButton').onclick = () => {
+            insertarDesdeHTML();
+        };
 
-        let arbol = null;
-
-        function mostrarMensaje(texto) {
-            const mensaje = document.getElementById("floating-message");
-            mensaje.textContent = texto;
-            mensaje.classList.add("show");
-
-            setTimeout(() => {
-                mensaje.classList.remove("show");
-            }, 2000);
-        }
-
-        function insertar() {
-            let numero = parseInt(document.getElementById("insertNumber").value);
-            if (!isNaN(numero)) {
-                // Logica de insercion aqui
-                mostrarMensaje(`Se insertó correctamente el número ${numero}`);
-                actualizarArbol();
-            }
-        }
-
-        function eliminar() {
-            let numero = parseInt(document.getElementById("deleteNumber").value);
-            if (!isNaN(numero)) {
-                // Logica de eliminacion aqui
-                mostrarMensaje(`Se eliminó correctamente el número ${numero}`);
-                actualizarArbol();
-            }
-        }
-
-        function inorder() { alert("Recorrido Inorder"); }
-        function posorder() { alert("Recorrido Posorder"); }
-        function preorder() { alert("Recorrido Preorder"); }
-
-        function actualizarArbol() {
-            d3.select("#tree").selectAll("*").remove();
-
-            const svg = d3.select("#tree")
-                .append("svg")
-                .attr("width", 600)
-                .attr("height", 400);
-
-            if (arbol) {
-                svg.append("circle")
-                    .attr("cx", 300)
-                    .attr("cy", 100)
-                    .attr("r", 20)
-                    .attr("fill", arbol.color === "negro" ? "black" : "red");
-
-                svg.append("text")
-                    .attr("x", 300)
-                    .attr("y", 105)
-                    .attr("fill", "white")
-                    .attr("text-anchor", "middle")
-                    .text(arbol.valor);
-            }
-        }
     </script>
 </body>
 </html>
