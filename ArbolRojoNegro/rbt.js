@@ -357,13 +357,14 @@ class RBTree {
     }
     dibujarArbol(ctx, node, x, y, offset) {
         if (node) {
-            // Dibujar el nodo
-            ctx.fillStyle = 'white'; // Color de los números
-            ctx.fillText(node.value, x, y); // Dibuja el valor del nodo
+            // Establecer el color del nodo
+            ctx.fillStyle = node.color === 'red' ? 'red' : 'black'; // Cambiar color según el nodo
             ctx.beginPath();
             ctx.arc(x, y, 20, 0, Math.PI * 2); // Dibuja un círculo para el nodo
-            //ctx.fill();
-            ctx.strokeText(node.value, x - 10, y + 5); // Dibuja el valor en el nodo
+            ctx.fill(); // Rellena el círculo con el color del nodo
+            // Dibuja el valor del nodo en color blanco para que sea visible en ambos fondos
+            ctx.fillStyle = 'white';
+            ctx.fillText(node.value, x - 10, y + 5); // Ajuste la posición del texto dentro del nodo
             // Dibujar las conexiones (líneas) a los nodos hijos
             const children = node.children;
             if (children) {
@@ -394,7 +395,7 @@ class RBTree {
         const data = Number(inputElement.value);
         console.log(`Trying to search: ${data}`);
         if (!isNaN(data)) {
-            const result = this.buscar(data); 
+            const result = this.buscar(data); // Llamamos al método buscar
             const resultadoDiv = document.getElementById("resultadoBuscar");
             if (result.node) {
                 resultadoDiv.innerHTML = `Nodo encontrado: ${result.node.getData()}<br>Color: ${result.color}<br>Recorrido: ${result.recorrido.join(' -> ')}`;
@@ -414,7 +415,7 @@ class RBTree {
         const data = Number(inputElement.value);
         console.log(`Trying to delete: ${data}`);
         if (!isNaN(data)) {
-            const message = this.eliminar(data); 
+            const message = this.eliminar(data); // Llamamos al método delete
             const resultadoDiv = document.getElementById("resultadoEliminar");
             resultadoDiv.innerText = message;
             console.log(message);
@@ -428,7 +429,7 @@ class RBTree {
         const recorrido = [];
         let current = this.root;
         while (current !== this.leaf) {
-            recorrido.push(current.getData()); 
+            recorrido.push(current.getData()); // Guardamos el recorrido
             if (data === current.getData()) {
                 return { node: current, color: current.getColor(), recorrido }; // Retornamos el nodo, su color y el recorrido
             }
@@ -444,10 +445,10 @@ class RBTree {
     eliminar(data) {
         const nodeToDelete = this.buscar(data); // Buscar el nodo que contiene el dato
         if (nodeToDelete.node === null) {
-            return "El nodo no existe en el árbol";
+            return "El nodo no existe en el árbol"; // Mensaje si no se encuentra el nodo
         }
         // Llamamos al método deleteNode pasando el nodo encontrado
-        this.deleteNode(nodeToDelete.node);
+        this.deleteNode(nodeToDelete.node); // Cambia el nombre si tu método de eliminación es diferente
         return `Nodo con valor ${data} eliminado`; // Mensaje de éxito
     }
     deleteNode(node) {
@@ -480,7 +481,7 @@ class RBTree {
             y = this.minimum(z.getRightChild());
             yOriginalColor = y.getColor();
             x = y.getRightChild();
-            if (y.getFather() === z) { 
+            if (y.getFather() === z) { // Aquí se usa getFather en lugar de setFather
                 x.setFather(y);
             }
             else {
