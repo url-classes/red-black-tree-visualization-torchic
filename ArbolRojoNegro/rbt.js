@@ -318,18 +318,17 @@ class RBTree {
         if (!isNaN(data)) {
             this.insert(data);
             console.log(`Inserted: ${data}`);
-            this.mostrarArbol();
+            this.mostrarArbol(this.obtenerNodos(this.root));
         }
         else {
             console.error("Invalid input: Not a number");
         }
     }
-    mostrarArbol() {
+    mostrarArbol(nodes) {
         const canvas = document.getElementById("treeCanvas");
         const ctx = canvas.getContext("2d");
         if (ctx) {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
-            const nodes = this.obtenerNodos(this.root);
             console.log("Nodes to be displayed:", nodes);
             // Dibujar el árbol
             this.dibujarArbol(ctx, nodes, canvas.width / 2, 30, canvas.width / 4);
@@ -368,8 +367,66 @@ class RBTree {
         };
         return nodeData;
     }
+
+    inorder(node, nodes){
+        if(node === this.leaf) return;
+        this.inorder(node.getLeftChild(), nodes);
+        let n = nodes;
+        while (n) {
+            if(n.value === node.getData()){
+                n.color = "green";
+                setTimeout(() => {
+                    mostrarArbol(nodes);
+                }, 500);
+                n.color = node.isRed() ? "red" : "black";
+            }
+            
+        }
+        this.inorder(node.getRightChild(), nodes);   
+    }
 }
+
+function inorder(node, nullNode){
+    let txt = ""; 
+    if(node != nullNode){
+        txt += inorder(node.getLeftChild());
+        txt += node.getData() + ", ";
+        txt += inorder(node.getRightChild());
+    }
+    return txt;
+}
+
+function postorder(node, nullNode){
+    let txt = "";
+    if(node != nullNode){
+        txt += postorder(node.getLeftChild());
+        txt += postorder(node.getRightChild());
+        txt += node.getData() + ", ";
+    }
+    return txt;
+}
+
+function preorder(node, nullNode){
+    let txt = "";
+    if(node != nullNode){
+        txt += node.getData() + ", ";
+        txt += preorder(node.getLeftChild());
+        txt += preorder(node.getRightChild());
+    }
+    return txt;
+}
+
 // Instancia del árbol
 const arbolRojoNegro = new RBTree();
 // Asignación a window
 window.insertarDesdeHTML = () => arbolRojoNegro.insertarDesdeHTML();
+
+window.inorderTxt = () => document.getElementById("recorrido").innerHTML = inorder(arbolRojoNegro.getRoot(), arbolRojoNegro.getLeaf());
+window.preorderTxt = () => document.getElementById("recorrido").innerHTML = preorder(arbolRojoNegro.getRoot(), arbolRojoNegro.getLeaf());
+window.postorderTxt = () => document.getElementById("recorrido").innerHTML = postorder(arbolRojoNegro.getRoot(), arbolRojoNegro.getLeaf());
+
+/*window.inorderTraversal = () => inorderTraversal();
+function inorderTraversal(){
+    console.log("Inorder");
+    arbolRojoNegro.inorder(arbolRojoNegro.getRoot(), arbolRojoNegro.obtenerNodos(arbolRojoNegro.getRoot()));
+}*/
