@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Árbol Rojo-Negro</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace al archivo CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Árbol <span style="color: red;">Rojo</span>-Negro</h1>
+        
+        <div class="input-group">
+            <input type="number" id="insertNumber" placeholder="Número a insertar">
+            <button id="insertButton">Insertar</button>
+        </div>
+        
+        <div class="input-group">
+            <input type="number" id="deleteNumber" placeholder="Número a eliminar">
+            <button id="deleteButton">Eliminar</button>
+            <div id="resultadoEliminar"></div> 
+        </div>
+        
+        <div class="input-group">
+            <input type="number" id="searchNumber" placeholder="Número a buscar">
+            <button id="searchButton">Buscar</button>
+            <div id="resultadoBuscar"></div> 
+        </div>
+        
+        <div class="input-group">
+            <button id="inorderButton">Inorder</button>
+            <button id="posorderButton">Posorder</button>
+            <button id="preorderButton">Preorder</button>
+        </div>
+    </div>
+
+    <!-- Canvas para dibujar el árbol -->
+    <canvas id="treeCanvas" width="800" height="400" style="border:1px solid black;"></canvas>
+
+    <div id="floating-message" class="floating-message"></div>
+
+    <script src="./ArbolRojoNegro/rbt.js" type="module" defer></script>
+    <script>
+        // Asignación de eventos para cada botón
+        document.getElementById('insertButton').onclick = () => insertarDesdeHTML();
+        document.getElementById('deleteButton').onclick = () => eliminarDesdeHTML();
+        document.getElementById('searchButton').onclick = () => buscarDesdeHTML();
+
+        // Funciones para actualización del árbol en el canvas
+        function actualizarCanvas() {
+            // Aquí puedes llamar la función que redibuje el árbol en el canvas
+        }
+    </script>
+</body>
+</html>
