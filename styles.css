@@ -1,35 +1,38 @@
+/* styles.css */
 body {
     font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.input-group {
+    margin: 10px 0;
+}
+
+.tree-container {
+    margin-top: 30px;
     text-align: center;
 }
 
-#tree-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.node {
-    border: 1px solid black;
-    padding: 10px;
-    margin: 10px;
-    display: inline-block;
-    border-radius: 50%;
-}
-
-.node.red {
-    background-color: red;
+.floating-message {
+    position: fixed;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4caf50;
     color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    opacity: 0;
+    transition: top 0.5s, opacity 0.5s;
 }
 
-.node.black {
-    background-color: black;
-    color: white;
-}
-
-.edge {
-    width: 2px;
-    height: 50px;
-    background-color: black;
-    margin: 0 auto;
+.floating-message.show {
+    top: 20px;
+    opacity: 1;
 }
