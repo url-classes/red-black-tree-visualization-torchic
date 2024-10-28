@@ -14,11 +14,8 @@ body {
 
 /* Contenedor del árbol */
 .tree-container {
-    display: flex; /* Alinear los nodos horizontalmente */
-    justify-content: center; /* Centrar nodos horizontalmente */
-    flex-direction: column; /* Apilar nodos en columnas */
-    align-items: center; /* Centrar nodos verticalmente */
     margin-top: 30px;
+    text-align: center;
 }
 
 /* Estilo de los nodos */
