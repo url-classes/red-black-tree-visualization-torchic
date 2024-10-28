@@ -379,27 +379,26 @@ class RBTree {
     mostrarArbol() {
         const canvas = document.getElementById("treeCanvas") as HTMLCanvasElement;
         const ctx = canvas.getContext("2d");
-
         if (ctx) {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpiar el canvas
             const nodes = this.obtenerNodos(this.root);
             console.log("Nodes to be displayed:", nodes);
-
             // Dibujar el árbol
             this.dibujarArbol(ctx, nodes, canvas.width / 2, 30, canvas.width / 4);
         }
     }
-
     private dibujarArbol(ctx: CanvasRenderingContext2D, node: any, x: number, y: number, offset: number) {
         if (node) {
-            // Dibujar el nodo
-            ctx.fillStyle = 'white'; // Color de los números
-            ctx.fillText(node.value, x, y); // Dibuja el valor del nodo
+            // Establecer el color del nodo
+            ctx.fillStyle = node.color === 'red' ? 'red' : 'black'; // Cambiar color según el nodo
             ctx.beginPath();
             ctx.arc(x, y, 20, 0, Math.PI * 2); // Dibuja un círculo para el nodo
-            //ctx.fill();
-            ctx.strokeText(node.value, x - 10, y + 5); // Dibuja el valor en el nodo
-
+            ctx.fill(); // Rellena el círculo con el color del nodo
+    
+            // Dibuja el valor del nodo en color blanco para que sea visible en ambos fondos
+            ctx.fillStyle = 'white';
+            ctx.fillText(node.value, x - 10, y + 5); // Ajuste la posición del texto dentro del nodo
+    
             // Dibujar las conexiones (líneas) a los nodos hijos
             const children = node.children;
             if (children) {
@@ -414,7 +413,7 @@ class RBTree {
                 }
             }
         }
-    }
+    }    
 
     obtenerNodos(node: NodeRBT): any {
         if (node === this.leaf) return null;
