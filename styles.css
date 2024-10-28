@@ -12,12 +12,26 @@ body {
     margin: 10px 0;
 }
 
-/* Centrar el canvas */
-.canvas-container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Asegura que se centre verticalmente */
+/* Contenedor del árbol */
+.tree-container {
+    display: flex; /* Alinear los nodos horizontalmente */
+    justify-content: center; /* Centrar nodos horizontalmente */
+    flex-direction: column; /* Apilar nodos en columnas */
+    align-items: center; /* Centrar nodos verticalmente */
     margin-top: 30px;
+}
+
+/* Estilo de los nodos */
+.node {
+    display: inline-block; /* Para que los nodos se alineen uno al lado del otro */
+    width: 40px; /* Ancho del nodo */
+    height: 40px; /* Alto del nodo */
+    border-radius: 20px; /* Para hacer un círculo */
+    text-align: center; /* Centrar el texto */
+    line-height: 40px; /* Centrar verticalmente el texto */
+    margin: 5px; /* Espaciado entre nodos */
+    color: white; /* Color del texto dentro del nodo */
+    font-weight: bold; /* Negrita para el texto */
 }
 
 /* Mensaje flotante */
